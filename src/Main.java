@@ -1,3 +1,4 @@
+import javax.management.StringValueExp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -49,6 +50,16 @@ public class Main {
         System.out.println(numToRu(18));
         System.out.println(numToRu(126));
         System.out.println(numToRu(909));
+
+//        System.out.println("Задание 8");
+//        System.out.println(getSha256Hash("password123"));
+//        System.out.println(getSha256Hash("Fluffy@home"));
+//        System.out.println(getSha256Hash("Hey dude!"));
+
+        System.out.println("Задание 9");
+        System.out.println(correctTitle("jOn SnoW, kINg IN thE noRth."));
+        System.out.println(correctTitle("sansa stark, lady of winterfell."));
+        System.out.println(correctTitle("TYRION LANNISTER, HAND OF THE QUEEN."));
 
 
     }
@@ -294,5 +305,37 @@ public class Main {
             }
             return hund[x / 100] + p1 + tens[(x / 10) % 10] + p2 + first20[x % 10];
         }
+    }
+//
+//    // возвращаем безопасный хеш SHA-256 для данной строки
+//    public static String getSha256Hash(String str) throws NoSuchAlgorithmException {
+//        MessageDigest digest = MessageDigest.getInstance("SHA-256");
+//        byte[] hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
+//
+//        return hash.toString();
+//    }
+
+    // возвращает строку с правильным регистром для заголовков символов
+    public static StringBuilder correctTitle(String str) {
+        String[] words = str.split(" ");
+        String alwaysLover = "and the of in";
+        StringBuilder result = new StringBuilder();
+        String word;
+        // перебираем слова
+        for (int i = 0; i < words.length; i++) {
+            // если это не and the of in
+            word = words[i];
+            if (!alwaysLover.contains(word)) {
+                result.append(String.valueOf(word.charAt(0)).toUpperCase() +
+                        word.substring(1).toLowerCase());
+            } else {
+                result.append(word.toLowerCase());
+            }
+            // если это не последнее слово - прибавляем пробел
+            if (i != words.length - 1) {
+                result.append(" ");
+            }
+        }
+        return result;
     }
 }
