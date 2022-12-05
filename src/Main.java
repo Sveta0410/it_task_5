@@ -1,4 +1,7 @@
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 
 public class Main {
@@ -24,6 +27,16 @@ public class Main {
         System.out.println(sumDigProd(16, 28));
         System.out.println(sumDigProd(0));
         System.out.println(sumDigProd(1, 2, 3, 4, 5, 6));
+
+        System.out.println("Задание 5");
+        String[] array2 = new String[]{"toe", "ocelot", "maniac"};
+        String[] array3 = new String[]{"many", "carriage", "emit", "apricot", "animal"};
+        String[] array4 = new String[]{"hoops", "chuff", "bot", "bottom"};
+        System.out.println(Arrays.toString(sameVowelGroup(array2)));
+        System.out.println(Arrays.toString(sameVowelGroup(array3)));
+        System.out.println(Arrays.toString(sameVowelGroup(array4)));
+
+
 
     }
     // принимаем строку и возвращаем закодированное сообщение
@@ -127,5 +140,37 @@ public class Main {
             result = product;
         }
         return result;
+    }
+
+    // выбираем все слова, имеющие все те же гласные (в любом порядке и / или количестве),
+    // что и первое слово, включая первое слово
+    public static String[] sameVowelGroup(String[] words){
+        // hashset для хранения гласных первого слова в единственном экземпляре
+        Set<Character> firstVovels = findVovels(words[0]);
+
+        // добавляем первое слово в итоговый массив
+        ArrayList<String> result = new ArrayList<>();
+        result.add(words[0]);
+
+        // перебираем все слова
+        for (int i = 1; i < words.length; i++){
+            Set<Character> temp = findVovels(words[i]);
+            if (temp.equals(firstVovels)){
+                result.add(words[i]);
+            }
+        }
+        return result.toArray(new String[]{});
+
+    }
+    public static Set<Character> findVovels(String word){
+        // убираем согласные
+        String wordVovels = word.replaceAll("[bcdfghjklmnpqrstvwxyz]", "");
+        // hashset для хранения гласных в единственном экземпляре
+        Set<Character> vovels = new HashSet<>();
+        // добавляем все гласные слова в hashset
+        for (char i : wordVovels.toCharArray()){
+            vovels.add(i);
+        }
+        return vovels;
     }
 }
