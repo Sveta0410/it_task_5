@@ -40,6 +40,11 @@ public class Main {
         System.out.println(validateCard(1234567890123456L));
         System.out.println(validateCard(1234567890123452L));
 
+        System.out.println("Задание 7");
+        System.out.println(numToEng(0));
+        System.out.println(numToEng(18));
+        System.out.println(numToEng(126));
+        System.out.println(numToEng(909));
 
 
     }
@@ -214,5 +219,34 @@ public class Main {
         }
         return (10 - (sum % 10)) == checkDigit;
 
+    }
+
+    // возвращаем строковое представление целого числа, написанное на английском языке
+    public static String numToEng(int x) {
+        // первые 20 цифр
+        String[] first20 = {"", "one", "two", "three", "four", "five", "six", "seven", "eight", "nine", "ten",
+                "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen"};
+        // десятки
+        String[] tens = {"", "ten", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety"};
+        if (x == 0){
+            return "zero";
+        }
+        if (x < 20){
+            return first20[x];
+        } else if (x < 100){
+            return tens[x / 10] + " " + first20[x % 10];
+        } else {
+            String p1 = " ";
+            String p2 = " ";
+            // если у нас десаток нет, то пробел не ставим между сотнями и единицами
+            if ((x / 10) % 10 == 0) {
+                p2 = "";
+                // если единиц нет, после hundred пробел не ставим
+                if (x % 10 == 0) {
+                    p1 = "";
+                }
+            }
+            return first20[x / 100] + " hundred" + p1 + tens[(x / 10) % 10] + p2 + first20[x % 10];
+        }
     }
 }
