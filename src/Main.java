@@ -162,6 +162,7 @@ public class Main {
         return result.toArray(new String[]{});
 
     }
+    // вспомогательная функция, помогающая найти уникальные гласные в слове
     public static Set<Character> findVovels(String word){
         // убираем согласные
         String wordVovels = word.replaceAll("[bcdfghjklmnpqrstvwxyz]", "");
