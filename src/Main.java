@@ -36,6 +36,10 @@ public class Main {
         System.out.println(Arrays.toString(sameVowelGroup(array3)));
         System.out.println(Arrays.toString(sameVowelGroup(array4)));
 
+        System.out.println("Задание 6");
+        System.out.println(validateCard(1234567890123456L));
+        System.out.println(validateCard(1234567890123452L));
+
 
 
     }
@@ -173,5 +177,42 @@ public class Main {
             vovels.add(i);
         }
         return vovels;
+    }
+
+    // проверяем, является ли число действительным номером кредитной карты
+    public static boolean validateCard(long x) {
+
+        // длина числа
+        int xLen = String.valueOf(x).length();
+        // проверяем, подходит ли нам такая длина числа
+        if (xLen < 14 || xLen > 16) {
+            return false;
+        }
+        // контрольная цифра
+        int checkDigit = (int) x % 10;
+        // последнюю цифру убираем
+        x = x / 10;
+        // переворачиваем число
+        StringBuilder newX = new StringBuilder(String.valueOf(x)).reverse();
+        // переменная, необходимая для последующих вычислений (для удваивания значений в нечётных позициях)
+        int number = 0;
+        // переменная для суммы
+        int sum = 0;
+        // проходим по всем цифрам. Удваиваем на нечётных позициях + находим сумму
+        for (int i = 0; i < newX.length(); i++) {
+            number = newX.charAt(i);
+            // если позиция нечётная
+            if ((i + 1) % 2 != 0) {
+                number *= 2;
+                // если удвоенное значение имеет более 1 цифры, складываем цифры вместе
+                if (number >= 10) {
+                    // слагаемых 2 т.к. максимальное значение number 9*2=18
+                    number = number % 10 + (number / 10) % 10;
+                }
+            }
+            sum += number;
+        }
+        return (10 - (sum % 10)) == checkDigit;
+
     }
 }
