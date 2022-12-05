@@ -57,7 +57,7 @@ public class Main {
 //        System.out.println(getSha256Hash("Hey dude!"));
 
         System.out.println("Задание 9");
-        System.out.println(correctTitle("jOn SnoW, kINg IN thE noRth."));
+        System.out.println(correctTitle("jOn-SnoW, kINg IN thE noRth."));
         System.out.println(correctTitle("sansa stark, lady of winterfell."));
         System.out.println(correctTitle("TYRION LANNISTER, HAND OF THE QUEEN."));
 
@@ -325,7 +325,14 @@ public class Main {
         for (int i = 0; i < words.length; i++) {
             // если это не and the of in
             word = words[i];
-            if (!alwaysLover.contains(word)) {
+            if (word.contains("-")){
+            // Дефисные слова считаются отдельными словами.
+            String[] parts = word.split("-");
+            result.append(String.valueOf(parts[0].charAt(0)).toUpperCase() +
+                    parts[0].substring(1).toLowerCase() + "-" +
+                    String.valueOf(parts[1].charAt(0)).toUpperCase() +
+                    parts[1].substring(1).toLowerCase());
+            } else if (!alwaysLover.contains(word)) {
                 result.append(String.valueOf(word.charAt(0)).toUpperCase() +
                         word.substring(1).toLowerCase());
             } else {
