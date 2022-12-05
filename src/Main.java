@@ -14,6 +14,12 @@ public class Main {
         System.out.println(canMove("Bishop", "A7", "G1"));
         System.out.println(canMove("Queen", "C4", "D6"));
 
+        System.out.println("Задание 3");
+        System.out.println(canComplete("butl", "beautiful"));
+        System.out.println(canComplete("butlz", "beautiful"));
+        System.out.println(canComplete("tulb", "beautiful"));
+        System.out.println(canComplete("bbutl", "beautiful"));
+
     }
     // принимаем строку и возвращаем закодированное сообщение
     // первая буква -> её символьный код, следующие элементы - различия между символам
@@ -77,5 +83,22 @@ public class Main {
                     (start.charAt(1) == 2 && finish.charAt(1) == 4);
         }
         return false;
+    }
+
+    // проверяем может ли слово быть завершено (буквы удалять и переставлять нельзя)
+    public static boolean canComplete(String start, String result){
+        // индекс (номер) который мы будем в последующих итерациях
+        // = нашли в итоговом слове первую букву -> ищем следующую(вторую) и т.д.
+        int index = 0;
+        // проходимся по всем элементам
+        for (int i = 0; i < result.length(); i++){
+            // если букву нашли - ищем следующую (index + 1)
+            if (start.charAt(index) == result.charAt(i)){
+                index++;
+            }
+        }
+        // если все буквы нашли, будет true
+        // иначе значение index будет меньше длины первой строки
+        return index == start.length();
     }
 }
