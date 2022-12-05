@@ -45,6 +45,10 @@ public class Main {
         System.out.println(numToEng(18));
         System.out.println(numToEng(126));
         System.out.println(numToEng(909));
+        System.out.println(numToRu(0));
+        System.out.println(numToRu(18));
+        System.out.println(numToRu(126));
+        System.out.println(numToRu(909));
 
 
     }
@@ -234,7 +238,12 @@ public class Main {
         if (x < 20){
             return first20[x];
         } else if (x < 100){
-            return tens[x / 10] + " " + first20[x % 10];
+            String p = " ";
+            // если просто 20, пробел не нужен после twenty
+            if (x % 10 == 0) {
+                p = "";
+            }
+            return tens[x / 10] + p + first20[x % 10];
         } else {
             String p1 = " ";
             String p2 = " ";
@@ -247,6 +256,43 @@ public class Main {
                 }
             }
             return first20[x / 100] + " hundred" + p1 + tens[(x / 10) % 10] + p2 + first20[x % 10];
+        }
+    }
+
+    // возвращаем строковое представление целого числа, написанное на русском языке
+    public static String numToRu(int x) {
+        // первые 20 цифр
+        String[] first20 = {"", "один", "два", "три", "четыре", "пять", "шесть", "семь", "восемь", "девять", "десять",
+                "одиннадцать", "двенадцать", "тринадцать", "четырнадцать", "пятнадцать", "шестнадцать", "семнадцать",
+                "восемнадцать", "девятнадцать"};
+        // десятки
+        String[] tens = {"", "ten", "двадцать", "тридцать", "сорок", "пятьдесят", "шестьдесят", "семьдесят",
+                "восемьдесят", "девяносто"};
+        String[] hund = {"", "сто", "двести", "триста", "четыреста", "пятьсот", "шестьсот", "семьсот",
+                "восемьсот", "девятьсот"};
+        if (x == 0){
+            return "ноль";
+        }
+        if (x < 20){
+            return first20[x];
+        } else if (x < 100){
+            String p = " ";
+            if (x % 10 == 0) {
+                p = "";
+            }
+            return tens[x / 10] + p + first20[x % 10];
+        } else {
+            String p1 = " ";
+            String p2 = " ";
+            // если у нас десаток нет, то пробел не ставим между сотнями и единицами
+            if ((x / 10) % 10 == 0) {
+                p2 = "";
+                // если единиц нет, после hundred пробел не ставим
+                if (x % 10 == 0) {
+                    p1 = "";
+                }
+            }
+            return hund[x / 100] + p1 + tens[(x / 10) % 10] + p2 + first20[x % 10];
         }
     }
 }
