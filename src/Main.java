@@ -20,6 +20,11 @@ public class Main {
         System.out.println(canComplete("tulb", "beautiful"));
         System.out.println(canComplete("bbutl", "beautiful"));
 
+        System.out.println("Задание 4");
+        System.out.println(sumDigProd(16, 28));
+        System.out.println(sumDigProd(0));
+        System.out.println(sumDigProd(1, 2, 3, 4, 5, 6));
+
     }
     // принимаем строку и возвращаем закодированное сообщение
     // первая буква -> её символьный код, следующие элементы - различия между символам
@@ -100,5 +105,27 @@ public class Main {
         // если все буквы нашли, будет true
         // иначе значение index будет меньше длины первой строки
         return index == start.length();
+    }
+
+    // принимаем числа в качестве аргументов, складываем их вместе и возвращаем
+    // произведение цифр до тех пор, пока ответ не станет длиной всего в 1 цифру.
+    public static int sumDigProd(int... x){
+        int result = 0;
+        int product = 0;
+        // сумма чисел
+        for (int i: x){
+            result += i;
+        }
+        // перемножаем пока результат не станет длиной в 1 цифру
+        while (result >= 10) {
+            product = 1;
+            // перемножаем все цифры числа
+            while (result != 0) {
+                product *= result % 10;
+                result /= 10;
+            }
+            result = product;
+        }
+        return result;
     }
 }
