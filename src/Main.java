@@ -1,4 +1,7 @@
 import javax.management.StringValueExp;
+import java.nio.charset.StandardCharsets;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
@@ -6,7 +9,7 @@ import java.util.Set;
 
 
 public class Main {
-    public static void main(String[] args) {
+    public static void main(String[] args){
         System.out.println("Задание 1");
         int[] array1 = new int[]{72, 33, -73, 84, -12, -3, 13, -13, -68};
         System.out.println(Arrays.toString(encrypt("Hello")));
@@ -51,10 +54,10 @@ public class Main {
         System.out.println(numToRu(126));
         System.out.println(numToRu(909));
 
-//        System.out.println("Задание 8");
-//        System.out.println(getSha256Hash("password123"));
-//        System.out.println(getSha256Hash("Fluffy@home"));
-//        System.out.println(getSha256Hash("Hey dude!"));
+        System.out.println("Задание 8");
+        System.out.println(getSha256Hash("password123"));
+        System.out.println(getSha256Hash("Fluffy@home"));
+        System.out.println(getSha256Hash("Hey dude!"));
 
         System.out.println("Задание 9");
         System.out.println(correctTitle("jOn-SnoW, kINg IN thE noRth."));
@@ -311,14 +314,26 @@ public class Main {
             return hund[x / 100] + p1 + tens[(x / 10) % 10] + p2 + first20[x % 10];
         }
     }
-//
-//    // возвращаем безопасный хеш SHA-256 для данной строки
-//    public static String getSha256Hash(String str) throws NoSuchAlgorithmException {
-//        MessageDigest digest = MessageDigest.getInstance("SHA-256");
-//        byte[] hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
-//
-//        return hash.toString();
-//    }
+
+    // возвращаем безопасный хеш SHA-256 для данной строки
+    public static String getSha256Hash(String str) {
+        StringBuilder hexString = new StringBuilder();
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA-256");
+            byte[] hash = digest.digest(str.getBytes(StandardCharsets.UTF_8));
+            // преобразовываем байты в шестнадцатеричную систему
+            for (int i = 0; i < hash.length; i++) {
+                String hex = Integer.toHexString(0xff & hash[i]);
+                if (hex.length() == 1) {
+                    hexString.append('0');
+                }
+                hexString.append(hex);
+            }
+        } catch (NoSuchAlgorithmException e){
+            System.out.println("error");
+        }
+        return hexString.toString();
+    }
 
     // возвращает строку с правильным регистром для заголовков символов
     public static StringBuilder correctTitle(String str) {
