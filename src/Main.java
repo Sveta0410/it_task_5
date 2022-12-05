@@ -61,6 +61,11 @@ public class Main {
         System.out.println(correctTitle("sansa stark, lady of winterfell."));
         System.out.println(correctTitle("TYRION LANNISTER, HAND OF THE QUEEN."));
 
+        System.out.println("Задание 10");
+        System.out.println(hexLattice(1));
+        System.out.println(hexLattice(7));
+        System.out.println(hexLattice(19));
+        System.out.println(hexLattice(21));
 
     }
     // принимаем строку и возвращаем закодированное сообщение
@@ -342,6 +347,47 @@ public class Main {
             if (i != words.length - 1) {
                 result.append(" ");
             }
+        }
+        return result;
+    }
+
+    // вывод гексогальной решётки (каждая точка имеет 6 соседей)
+    static StringBuilder hexLattice(int num){
+        // проверяем, является ли цисло центрированным шестиугольным
+        // n - номер центрированного числа
+        double n = (3 + Math.sqrt(12 * num - 3)) / 6;
+        // если число не целое - оно не центрированное шестиугольное
+        if (n % 1 != 0) {
+            return new StringBuilder("Invalid");
+        }
+        // n == 2 -> две точки сверху -> n + (n-1) = 2n-1 - кружков в центре
+        // символов в центре -> (2n-1) * 2 -1 (прибавляем по пробелу после каждого кружка)
+        // (пробел после последнего кружка не считаем)
+        // НЕ ТО n+1 символов на верхней строке сверху -> перед ними ((2n-1) * 2 - 1 - (n+1))/2 пробелов
+        // НЕ ТО= (4n - 2 - 1 - n - 1)/2=(2n -4)/2 = n-2
+        //
+        StringBuilder result = new StringBuilder("");
+        // идём до центра включительно (номер числа = расстояние от верха до центра)
+        for (int i = 1; i <= n; i++){
+            // расстояние до центра от строки, где мы находимся (i) = n - i
+            for (int j = 1; j <= n - i; j++) {
+                result.append(" ");
+            }
+            // число кружочков (каждую строку прибавляем 1)
+            for (int k = 1; k < n + i; k++) {
+                result.append("o ");
+            }
+            result.append("\n");
+        }
+        // идём от центра
+        for (int i = (int) (n - 1); i >= 1; i--){
+            for (int j = 1; j <= n - i; j++) {
+                result.append(" ");
+            }
+            for (int k = 1; k < n + i; k++) {
+                result.append("o ");
+            }
+            result.append("\n");
         }
         return result;
     }
